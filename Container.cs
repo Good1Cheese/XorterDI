@@ -13,7 +13,7 @@ public class Container
         Bindings.Add(typeof(T), value);
     }
 
-    public void SetBindings<T>(T value)
+    public void Inject<T>(T value)
     {
         Type type = value.GetType();
 
