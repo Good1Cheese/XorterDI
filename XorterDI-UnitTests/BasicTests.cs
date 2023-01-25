@@ -26,4 +26,17 @@ public class BasicTests
             container.Bind<TestBindable>(null);
         });
     }
+
+    [TestMethod]
+    public void Inject_WithNoAttribute_ReturnsNothing()
+    {
+        var fakeInjectable = new TestInjectableWithNoAttribute();
+        var bindable = new TestBindable();
+        var container = new Container();
+
+        container.Bind(bindable);
+        container.Inject(fakeInjectable);
+
+        Assert.IsNull(fakeInjectable.TestBindable);
+    }
 }
