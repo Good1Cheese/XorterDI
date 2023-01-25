@@ -15,4 +15,15 @@ public class BasicTests
 
         Assert.IsNotNull(injectable.TestBindable);
     }
+
+    [TestMethod]
+    public void Bind_Null_ReturnsException()
+    {
+        var container = new Container();
+
+        Assert.ThrowsException<ArgumentNullException>(() =>
+        {
+            container.Bind<TestBindable>(null);
+        });
+    }
 }
