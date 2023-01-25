@@ -21,14 +21,13 @@ public class BasicTests
     {
         var container = new Container();
 
-        Assert.ThrowsException<ArgumentNullException>(() =>
-        {
-            container.Bind<TestBindable>(null);
-        });
+        void Act() => container.Bind<TestBindable>(null);
+
+        Assert.ThrowsException<ArgumentNullException>(Act);
     }
 
     [TestMethod]
-    public void Inject_WithNoAttribute_ReturnsNothing()
+    public void Inject_WithNoAttribute_ReturnsNull()
     {
         var fakeInjectable = new TestInjectableWithNoAttribute();
         var bindable = new TestBindable();
