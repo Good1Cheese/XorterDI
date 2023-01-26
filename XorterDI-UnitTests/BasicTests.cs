@@ -17,6 +17,30 @@ public class BasicTests
     }
 
     [TestMethod]
+    public void Inject_WithNoAttribute_ReturnsException()
+    {
+        var fakeInjectable = new TestInjectableWithNoAttribute();
+        var bindable = new TestBindable();
+        var container = new Container();
+
+        container.Bind(bindable);
+        void Act() => container.Inject(fakeInjectable);
+
+        Assert.ThrowsException<XorterDIException>(Act);
+    }
+
+    [TestMethod]
+    public void Inject_WithNothingBinded_ReturnsException()
+    {
+        var injectable = new TestInjectable();
+        var container = new Container();
+
+        void Act() => container.Inject(injectable);
+
+        Assert.ThrowsException<XorterDIException>(Act);
+    }
+
+    [TestMethod]
     public void Bind_Null_ReturnsException()
     {
         var container = new Container();
@@ -24,18 +48,5 @@ public class BasicTests
         void Act() => container.Bind<TestBindable>(null);
 
         Assert.ThrowsException<ArgumentNullException>(Act);
-    }
-
-    [TestMethod]
-    public void Inject_WithNoAttribute_ReturnsNull()
-    {
-        var fakeInjectable = new TestInjectableWithNoAttribute();
-        var bindable = new TestBindable();
-        var container = new Container();
-
-        container.Bind(bindable);
-        container.Inject(fakeInjectable);
-
-        Assert.IsNull(fakeInjectable.TestBindable);
     }
 }

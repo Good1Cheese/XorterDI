@@ -27,7 +27,12 @@ public class Container
     {
         MethodInfo[] methods = type.GetMethods();
 
-        return methods.Single(m => m.GetCustomAttribute<InjectAttribute>() is not null);
+        var result = methods.SingleOrDefault(m =>
+        {
+            return m.GetCustomAttribute<InjectAttribute>() is not null;
+        });
+
+        return result ?? throw new XorterDIException($"None inject attribute found on {type}");
     }
 
     private object[] GetParametersValues(MethodInfo method)
@@ -40,7 +45,9 @@ public class Container
         {
             Type type = parameters[i].ParameterType;
 
-            result[i] = Bindings.First(b => b.Key == type).Value;
+            object value = Bindings.FirstOrDefault(b => b.Key == type).Value;
+
+            result[i] = value ?? throw new XorterDIException();
         }
 
         return result;
