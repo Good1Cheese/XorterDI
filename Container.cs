@@ -15,6 +15,8 @@ public class Container
 
     public void Inject<T>(T value)
     {
+        if (value == null) throw new ArgumentNullException(nameof(value));
+
         Type type = value.GetType();
 
         MethodInfo method = GetInjectMethod(type);

@@ -41,6 +41,16 @@ public class BasicTests
     }
 
     [TestMethod]
+    public void Inject_Null_ReturnsException()
+    {
+        var container = new Container();
+
+        void Act() => container.Inject<TestBindable>(null);
+
+        Assert.ThrowsException<ArgumentNullException>(Act);
+    }
+
+    [TestMethod]
     public void Bind_Null_ReturnsException()
     {
         var container = new Container();
