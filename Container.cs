@@ -47,7 +47,7 @@ public class Container
 
             object value = Bindings.FirstOrDefault(b => b.Key == type).Value;
 
-            result[i] = value ?? throw new XorterDIException();
+            result[i] = value ?? throw new XorterDIException($"None binding found in {method} method");
         }
 
         return result;
